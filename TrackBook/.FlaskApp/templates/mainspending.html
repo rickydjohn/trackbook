@@ -1,0 +1,47 @@
+
+<br>
+<div class="row">
+  <div class="col-sm-3" style="background-color:#f2f2f2;">
+  <h3>Total Spending</h3>
+  <br>
+  {% if total %}
+	  <h4>&#8377; {{ total }}</h4>
+  {% else %}
+	  <h4>&#8377; 0</h4>
+  {% endif %}
+  </div>
+  <div class="col-sm-3" style="background-color:#f2f2f2; margin-left: 15px;">
+  <h3>Quota Remaining</h3>
+  <br>
+  {% if tttotal %}
+	  <h4>&#8377; {{ tttotal }}</h4>
+  {% else %}
+	
+	  <h4>Update the <a href="/settings/">settings</a></h4>
+  {% endif %}
+  </div>
+</div>
+
+<div class="row">
+<div class="col-sm-3" style="background-color:#f2f2f2; margin-top: 15px;">
+  <h3>Personal Spending</h3>
+  <br>
+  {% if ptotal %}
+          <h4>&#8377; {{ ptotal }}</h4>
+  {% else %}
+          <h4>&#8377; 0</h4>
+  {% endif %}
+  </div>
+
+
+<div class="col-sm-3" style="background-color:#f2f2f2; margin-top: 15px; margin-left:15px;">
+  <h3>Shared Spending</h3>
+  <br>
+  {% if stotal %}
+          <h4>&#8377; {{ stotal }}</h4>
+  {% else %}
+          <h4>&#8377; 0</h4>
+  {% endif %}
+  </div>
+
+</div>

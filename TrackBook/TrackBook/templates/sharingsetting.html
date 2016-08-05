@@ -1,0 +1,62 @@
+{% extends "template.html" %}
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-success fade in">
+    {% for message in messages %}
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ message }}
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
+
+<ul class="nav nav-tabs">
+    <li><a href="/settings/">Settings</a></li>
+    <li class="active"><a href="/sharingsetting/">Sharing</a></li>
+  </ul>
+<br>
+
+<pre>
+WARNING!!
+You can share data with users existing in our database.
+If some users you attempted to share with does not appear in your share list, then it is not a valid username.
+</pre>
+<br>
+
+{% if data %}
+{% for i in data %}
+
+<form class="form-inline" method="POST" action="/updatesharingsetting/">
+  <div class="form-group">
+    <label for="shareTag">Share Tag</label>
+    <input type="text" class="form-control" name="shareTag" value="{{i}}" readonly="readonly">
+  </div>
+  <div class="form-group">
+    <label for="shareWith">Share With</label>
+    <input type="text" class="form-control" name="shareWith" value="{{data[i]['sharingWith'] | join(',')}}">
+  </div>
+  <button type="submit" class="btn btn-primary" name="submitaction" value="update">Update</button>
+  <button type="submit" class="btn btn-primary" name="submitaction" value="delete">Delete</button>
+</form>
+<br>
+
+{% endfor %}
+{% endif %}
+
+<h3>Create Share Tag: </h3>
+<form class="form-inline" method="POST" action="/sharingsetting/">
+  <div class="form-group">
+    <label for="shareTag">Share Tag</label>
+    <input type="text" class="form-control" name="shareTag" placeholder="jane-john">
+  </div>
+  <div class="form-group">
+    <label for="shareWith">Share With</label>
+    <input type="text" class="form-control" name="shareWith" placeholder="jane,john">
+  </div>
+  <button type="submit" class="btn btn-primary">Genereate Share Tag</button>
+</form>
+
+
+{% endblock %}

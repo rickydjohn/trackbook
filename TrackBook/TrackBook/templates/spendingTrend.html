@@ -1,0 +1,77 @@
+{% extends "template.html" %}
+
+{% block body %}
+
+{% if data %}
+ <form class="form-inline" role="form" method="POST" action="/spendingTrend/">
+    <div class="form-group">
+      <label for="fromDate">From:</label>
+      <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="DD/MM/YYYY" style="text-transform:uppercase" required>
+    </div>
+    <div class="form-group">
+      <label for="toDate">To:</label>
+      <input type="date" class="form-control" id="toDate" name="toDate" placeholder="DD/MM/YYYY" style="text-transform:uppercase" required>
+    </div>
+        <div class="form-group">
+        <label class="control-label col-sm-3" for="shareTag">Share Tag:</label>
+        <div class="col-sm-4">
+      <select class="form-control" name="shareTag">
+        <option value="None" selected>None</option>
+        {% if shares %}
+        {% for i in shares %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+        {% endif %}
+      </select>
+        </div>
+        </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<br>
+
+{% if method == "GET" %}
+<h3>Montly Report</h3>
+{% else %}
+<h3>Data from {{fromDate}} to {{toDate}}</h3>
+{% endif %}
+
+<table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Id #</th>
+        <th>Item Bought</th>
+        <th>Bought From</th>
+        <th>Amount</th>
+        <th>Spending Type</th>
+        <th>Share Tag</th>
+        <th>Time</th>
+        <th>Spent By</th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for i in data %}
+	<tr>
+	<td>{{loop.index}}</td>
+	<td>{{i[0]}}</td>
+	<td>{{i[1]}}</td>
+	<td>{{i[2]}}</td>
+	<td>{{i[3]}}</td>
+	<td>{{i[4]}}</td>
+	<td>{{i[5]}}</td>
+	<td>{{i[6]}}</td>
+	</tr>
+	{% endfor %}
+	{% if total %}
+	<tr><th colspan="3">Total</th><th>{{ total }}</th></tr>
+	{% endif %}
+    </tbody>
+  </table>
+
+{% else %}
+
+<div class="jumbotron">
+	<p> There is no data to display</p>
+  </div>
+
+{% endif %}
+{% endblock %}

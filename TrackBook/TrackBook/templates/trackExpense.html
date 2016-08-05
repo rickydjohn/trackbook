@@ -1,0 +1,92 @@
+{% extends "template.html"  %}
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-success fade in">
+    {% for message in messages %}
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ message }}
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
+
+<script type="text/javascript">
+
+function yesnoCheck() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.visibility = 'visible';
+    }
+    else document.getElementById('ifYes').style.visibility = 'hidden';
+}
+
+</script>
+
+<div class="spentForm">
+
+  <form class="form-horizontal" role="form" method="POST" action="/trackExpense/">
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="spentOn">Spent On:</label>
+      <div class="col-sm-4">          
+        <input type="text" class="form-control" id="spentOn" name="spentOn" required placeholder="Vegitables, Fruit, Milk, etc">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="spentAt">Spent At:</label>
+      <div class="col-sm-4">          
+        <input type="text" class="form-control" list="spentAt" name="spentAt" required placeholder="Mk Retail, More, etc">
+	<datalist id="spentAt">
+		{% for i in place %}
+			<option>{{i}}</option>
+		{% endfor %}
+	</datalist>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="amount">Amount:</label>
+      <div class="col-sm-4">          
+        <input type="Number" class="form-control" id="amount" name="amount" required placeholder="1000">
+      </div>
+    </div>
+
+    <div class="form-group">
+    <label class="radio-inline col-sm-offset-2 col-sm-1">
+      <input type="radio" name="share" value="personal" onclick="javascript:yesnoCheck();" id="noCheck" checked>Personal
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="share" value="shared" onclick="javascript:yesnoCheck();" id="yesCheck">Shared
+    </label>
+    </div>
+
+
+<div id="ifYes" style="visibility:hidden">
+	{% if shares %}
+	<div class="form-group">
+	<label class="control-label col-sm-2" for="shareTag">Share Tag:</label>
+	<div class="col-sm-4">
+      <select class="form-control" name="shareTag">
+	{% for i in shares %}
+        <option value="{{i}}">{{i}}</option>
+	{% endfor %}
+      </select>
+	</div>
+	</div>
+	{% else %}
+	<p>You have not defined a sharing condition. Please go <a href="/sharingsetting/">here</a> to define one<p>
+	{% endif %}
+</div>
+
+
+<div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
