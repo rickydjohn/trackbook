@@ -9,6 +9,5 @@ Features:
 
 * Keeps track of montly expendeture.
 
-
 #Contributors
 1. Ricky DJ
